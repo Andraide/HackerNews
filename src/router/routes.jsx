@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { history } from '@/statics';
+import { history } from '../statics';
 import {
   Router,
   Switch,
@@ -10,14 +10,16 @@ import {
 import { Home, About } from "../screens";
 
 
-export default function Routes() 
+export default class Routes extends Component
 {
-    return (
-        <Router history={history}>
-            <Switch>
-                <Route exact path= "/" component={Home}></Route>
-                <Route path="/about" component={About}></Route>
-            </Switch>
-        </Router>
-    )
+    render() {
+        return (
+            <Router history={history}>
+                <Switch>
+                    <Route exact path= "/" component={Home}></Route>
+                    <Route path="/about" component={About}></Route>
+                </Switch>
+            </Router>
+        )
+    }
 }

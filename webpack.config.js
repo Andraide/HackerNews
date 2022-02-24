@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require("webpack");
-const ConsoleLogOnBuildWebpackPlugin = require("./plugins/ConsoleLogOnBuildWebpackPlugin");
 
 module.exports = {
     mode: 'development',
@@ -24,12 +23,11 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx'],
         alias: {
-            '@': path.resolve(__dirname, 'src/'),
+            '@2323': path.resolve(__dirname, 'src/'),
         }
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new ConsoleLogOnBuildWebpackPlugin()
+        new webpack.HotModuleReplacementPlugin()    
     ],
     devServer: {
         contentBase: path.join(__dirname, "public/"),
