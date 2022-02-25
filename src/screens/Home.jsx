@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BasicSelect from "../components/dropdown";
+import DropDownMenu from "../components/DropDownMenu";
 import { newsService } from "../services/news.service"
 import { connect } from 'react-redux';
 import { incrementAction, decreaseAction } from '../redux/actions/actions';
@@ -36,7 +36,7 @@ class Home extends Component {
         return (
         <div>
             <div>
-                <BasicSelect/>
+               
             </div>
             <h1>Home</h1>
             <div>
