@@ -7,7 +7,8 @@ import {
   Link
 } from "react-router-dom";
 
-import { Home, About } from "../screens";
+import { About } from "../screens";
+import Home from "../screens/Home"
 
 
 export default class Routes extends Component

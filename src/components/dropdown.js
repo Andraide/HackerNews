@@ -4,8 +4,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { connect } from 'react-redux';
 
-export default class BasicSelect extends Component {
+class BasicSelect extends Component {
 
     constructor(props) {
         super(props)
@@ -26,6 +27,9 @@ export default class BasicSelect extends Component {
 
     render()
     {
+        const { value } = this.props
+        console.log("Value", value)
+
         return (
             true ? 
             <Box sx={{ minWidth: 120 }}>
@@ -48,3 +52,9 @@ export default class BasicSelect extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+  value: state.value,
+});
+
+export default connect(mapStateToProps)(BasicSelect)
