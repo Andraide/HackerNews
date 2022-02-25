@@ -10,33 +10,28 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            news: null
+            news: null,
+            filterOne: 'all'
         }
     }
 
     componentDidMount()
     {
-        console.log("Mount", "Mount")
-        newsService.getNewsByFilter('angular').then((news) => { 
-            this.setState({ news }) 
-            console.log("News", news)
-            log.info("News")
-        })
-        //log.info("Log info working")
+        newsService.getNewsByFilter('angular').then((news) => this.setState({ news }))
     }
 
     newsList()
     {
         const { news } = this.state
-        console.log("List", news)
-        /*news.map((x, i) => {
-            log.info(Object.keys(x))
-        })*/
+        news.map((x, i) => {
+            console.log("Keys",Object.keys(x))
+            const { author, story_titile, story_url, created_at } = x
+        })
     }
 
     render() {
         const { news } = this.state
-        log.info("Render")
+        
         return (
         <div>
             <div>

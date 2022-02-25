@@ -26,8 +26,6 @@ export default class BasicSelect extends Component {
 
     render()
     {
-        //const { age } = this.state
-        //console.log(this.state.age)
         return (
             true ? 
             <Box sx={{ minWidth: 120 }}>

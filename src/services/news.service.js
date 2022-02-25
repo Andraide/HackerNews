@@ -40,7 +40,18 @@ async function getNewsByFilter(query) {
     return fetch(url, requestOptions)
             .then(handleResponse)
             .then(news => {
-                return Promise.resolve(news)
+                let hits =  news.hits.filter((hit) => {  
+                    const { author, story_titile, story_url, created_at } = hit
+                    if( author!=null && story_titile && story_url && created_at )
+                    {
+                        return false
+                    }
+                    else
+                    {
+                        return true
+                    }
+                })
+                return Promise.resolve(hits)
             }).catch((err) => {
                 console.log("Error ===>", err)
                 const { status } = err
