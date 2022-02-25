@@ -1,52 +1,64 @@
 import React, { Component } from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 
-export default class BasicSelect extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            age: null
-        }
-    }
-
-
-    componentDidMount()
-    {
-        console.log("Mounted")
-    }
-
-    handleChange(event) {
-        this.setState({ age: event.target.value});
+class DropDownMenu extends Component {
+  constructor() {
+    super();
+    
+    this.state = {
+      showMenu: false,
     };
-
-    render()
-    {
-        //const { age } = this.state
-        //console.log(this.state.age)
-        return (
-            true ? 
-            <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={10}
-                label="Age"
-                onChange={() => this.handleChange()}
-                >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-            </FormControl>
-            </Box>
-            : null
-        );
+    
+    this.showMenu = this.showMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+  }
+  
+  showMenu(event) {
+    event.preventDefault();
+    
+    this.setState({ showMenu: true }, () => {
+      document.addEventListener('click', this.closeMenu);
+    });
+  }
+  
+  closeMenu(event) {
+    
+    if (!this.dropdownMenu.contains(event.target)) {
+      
+      this.setState({ showMenu: false }, () => {
+        document.removeEventListener('click', this.closeMenu);
+      });  
+      
     }
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.showMenu}>
+          Show menu
+        </button>
+        
+        {
+          this.state.showMenu
+            ? (
+              <div
+                className="menu"
+                ref={(element) => {
+                  this.dropdownMenu = element;
+                }}
+              >
+                <button> Menu item 1 </button>
+                <button> Menu item 2 </button>
+                <button> Menu item 3 </button>
+              </div>
+            )
+            : (
+              null
+            )
+        }
+      </div>
+    );
+  }
 }
+
+export default DropDownMenu
