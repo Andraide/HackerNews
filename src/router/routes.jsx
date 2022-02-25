@@ -11,10 +11,9 @@ import { About } from "../screens";
 import Home from "../screens/Home"
 
 
-export default class Routes extends Component
+export default function Routes() 
 {
-    render() {
-        return (
+    return (
             <Router history={history}>
                 <Switch>
                     <Route exact path= "/" component={Home}></Route>
@@ -22,5 +21,4 @@ export default class Routes extends Component
                 </Switch>
             </Router>
         )
-    }
 }

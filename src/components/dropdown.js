@@ -11,8 +11,10 @@ class BasicSelect extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            age: null
+            age: 10
         }
+
+        this.handleChange = this.handleChange.bind(this)
     }
 
 
@@ -27,6 +29,7 @@ class BasicSelect extends Component {
 
     render()
     {
+        const { age } = this.state
         const { value } = this.props
         console.log("Value", value)
 
@@ -34,13 +37,12 @@ class BasicSelect extends Component {
             true ? 
             <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={10}
+                value={age}
                 label="Age"
-                onChange={() => this.handleChange()}
+                onChange={this.handleChange}
                 >
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>

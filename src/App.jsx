@@ -9,16 +9,10 @@ import {
 import Routes from "./router/routes";
 
 
-class App extends Component{
-  render(){
-    
-
+function App() {
     return(
         <Routes />    
     );
-
-    
-  }
 }
 
 
