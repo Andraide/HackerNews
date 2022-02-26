@@ -51,7 +51,9 @@ async function getNewsByFilter(query) {
                         return true
                     }
                 })
-                return Promise.resolve(hits)
+                let nbPages = news.nbPages
+                console.log("nbPages", nbPages)
+                return Promise.resolve({hits, nbPages})
             }).catch((err) => {
                 console.log("Error ===>", err)
                 const { status } = err

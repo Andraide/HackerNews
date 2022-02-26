@@ -5,6 +5,7 @@ import { newsService } from "../services/news.service"
 import { connect } from 'react-redux';
 import { incrementAction, decreaseAction } from '../redux/actions/actions';
 import { favService } from '../services/faves.services';
+import { Pagination } from 'semantic-ui-react';
 import { Icon, Label, Menu, Table } from 'semantic-ui-react'
 
 const getLogger = require('webpack-log');
@@ -18,14 +19,18 @@ class Home extends Component {
         this.state = {
             news: null,
             filterOne: 'all',
-            faves: null
+            faves: null,
+            currentPage: 1,
+            nbPages: null
         }
+
+        this.paginationClick = this.paginationClick.bind(this)
     }
 
     componentDidMount()
     {
         favService.getFaves()
-        newsService.getNewsByFilter('angular').then((news) => this.setState({ news }))
+        newsService.getNewsByFilter('angular').then(({hits, nbPages}) => this.setState({ news: hits, nbPages }))
 
         this.favorites = favService.favesSubject.subscribe(faves => { this.setState({ faves: faves }) })
     }
@@ -50,7 +55,7 @@ class Home extends Component {
         return news.map((x, i) => {
             const { author, story_titile, story_url, created_at, story_id } = x
             return (
-              <div align="center" style={{ width: '40vw', backgroundColor: 'yellow', alignItems: 'center', alignContent: 'center', align: 'center' }}>
+              <div key={i} align="center" style={{ width: '40vw', backgroundColor: 'yellow', alignItems: 'center', alignContent: 'center', align: 'center' }}>
                 <p>{author}</p>
                 <button onClick={() => this.addFavorite(story_id)}>Fav!</button>
               </div>
@@ -58,10 +63,23 @@ class Home extends Component {
         })
     }
 
+    pagination()
+    {
+        const { nbPages, currentPage } = this.state
+        return (
+          <Pagination defaultCurrentPage={1} onPageChange={this.paginationClick} totalPages={nbPages}/>
+        )
+    }
+
+    paginationClick(event, data)
+    {
+      this.setState({ currentPage: data.activePage })
+    }
+
 
 
     render() {
-        const { news } = this.state
+        const { news, nbPages } = this.state
         const { value, incrementAction, decreaseAction, library } = this.props;
         console.log("Library", library)
         return (
@@ -76,6 +94,9 @@ class Home extends Component {
             <div style={{ height: 20 }}></div>
             <div style={{ backgroundColor: 'blue', width: '90vw', columns: '2 auto' }}>
                {news && this.newsList()}
+            </div>
+            <div>
+              {nbPages && this.pagination()}
             </div>
         </div>
         )
