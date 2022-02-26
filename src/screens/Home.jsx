@@ -4,6 +4,8 @@ import DropDownMenu from "../components/DropDownMenu";
 import { newsService } from "../services/news.service"
 import { connect } from 'react-redux';
 import { incrementAction, decreaseAction } from '../redux/actions/actions';
+import { Icon, Label, Menu, Table } from 'semantic-ui-react'
+
 const getLogger = require('webpack-log');
 const log = getLogger({ name: 'About logs' });
 
@@ -33,8 +35,13 @@ class Home extends Component {
         const { news } = this.state
         const { library } = this.props
 
-        news.map((x, i) => {
+        return news.map((x, i) => {
             const { author, story_titile, story_url, created_at } = x
+            return (
+              <div align="center" style={{ width: '40vw', backgroundColor: 'yellow', alignItems: 'center', alignContent: 'center', align: 'center' }}>
+                <p>{author}</p>
+              </div>
+            )
         })
     }
 
@@ -43,14 +50,11 @@ class Home extends Component {
         const { value, incrementAction, decreaseAction, library } = this.props;
         console.log("Library", library)
         return (
-        <div>
+        <div align='center' style={{ alignItems: 'center' }}>
             <div>
                
             </div>
             <h1>Home</h1>
-            <div>
-                {news && this.newsList()}
-            </div>
             <Container>
                 <DropDownMenu />
             </Container>
@@ -58,6 +62,9 @@ class Home extends Component {
                 <h1>{value}</h1>
                 <button onClick={incrementAction}>increment</button>
                 <button onClick={decreaseAction}>decrease</button>
+            </div>
+            <div style={{ backgroundColor: 'blue', width: '90vw', columns: '2 auto' }}>
+               {news && this.newsList()}
             </div>
         </div>
         )
