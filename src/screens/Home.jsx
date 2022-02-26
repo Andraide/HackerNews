@@ -79,15 +79,14 @@ class Home extends Component {
 
 
     render() {
+
+
         const { news, nbPages } = this.state
         const { value, incrementAction, decreaseAction, library } = this.props;
         console.log("Library", library)
+        console.log("Toogle", this.props.toogle)
         return (
         <div align='center' style={{ alignItems: 'center' }}>
-            <div>
-               
-            </div>
-            <h1>Home</h1>
             <Container>
                 <DropDownMenu />
             </Container>
@@ -107,6 +106,7 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
   library: state.librarys.library,
   value: state.counter.value,
+  toogle: state.toogleMenu.toogle
 });
 
 const mapDispatchToProps = (dispatch) => ({

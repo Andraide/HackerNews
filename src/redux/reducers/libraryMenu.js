@@ -1,8 +1,8 @@
-const initialStateOne = {
+const initialState = {
     library: 'Angular',
   };
 
-  function libraryMenuReducer(state = initialStateOne, action)
+  function libraryMenuReducer(state = initialState, action)
   {
     switch(action.type) {
       case 'CHANGE':

@@ -51,22 +51,34 @@ const friendOptions = [
       
     }
 
+    toogleAll()
+    {
+        store.dispatch({ type: 'ALL' })
+    }
+
+    toogleFaves()
+    {
+        store.dispatch({ type: 'FAVES' })
+    }
+
     render()
     {
       //console.log("Value", this.props.value)
       return (
         <div>
-          <p>
-            {this.props.library}
-          </p>
-        <Dropdown
-          placeholder='Select Friend'
-          fluid
-          selection
-          options={friendOptions}
-          onChange={this.handleChange}
-          value={this.props.library}
-        />
+          <div style={{ marginTop: '4vh' }}>
+            <button onClick={this.toogleAll}>All</button>
+            <button onClick={this.toogleFaves}>Faves</button>
+          </div>
+          <div style={{ height: '4vh' }}></div>
+          <Dropdown
+            placeholder='Select Friend'
+            fluid
+            selection
+            options={friendOptions}
+            onChange={this.handleChange}
+            value={this.props.library}
+          />
         </div>
       )
 
@@ -76,7 +88,7 @@ const friendOptions = [
 
   const mapStateToProps = (state) => ({
     library: state.librarys.library,
-    value: state.counter.value
+    value: state.counter.value,
   });
 
 
