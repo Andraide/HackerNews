@@ -4,6 +4,7 @@ import DropDownMenu from "../components/DropDownMenu";
 import { newsService } from "../services/news.service"
 import { connect } from 'react-redux';
 import { incrementAction, decreaseAction } from '../redux/actions/actions';
+import { favService } from '../services/faves.services';
 import { Icon, Label, Menu, Table } from 'semantic-ui-react'
 
 const getLogger = require('webpack-log');
@@ -16,18 +17,29 @@ class Home extends Component {
         super(props)
         this.state = {
             news: null,
-            filterOne: 'all'
+            filterOne: 'all',
+            faves: null
         }
     }
 
     componentDidMount()
     {
+        favService.getFaves()
         newsService.getNewsByFilter('angular').then((news) => this.setState({ news }))
+
+        this.favorites = favService.favesSubject.subscribe(faves => { this.setState({ faves: faves }) })
     }
 
     componentDidUpdate()
     {
       console.log("Library update", this.props.library)
+      console.log("Faves updata", this.state.faves)
+    }
+
+    addFavorite(story_id)
+    {
+      console.log("addFav story id", story_id)
+      favService.setFaves(story_id)
     }
 
     newsList()
@@ -36,14 +48,17 @@ class Home extends Component {
         const { library } = this.props
 
         return news.map((x, i) => {
-            const { author, story_titile, story_url, created_at } = x
+            const { author, story_titile, story_url, created_at, story_id } = x
             return (
               <div align="center" style={{ width: '40vw', backgroundColor: 'yellow', alignItems: 'center', alignContent: 'center', align: 'center' }}>
                 <p>{author}</p>
+                <button onClick={() => this.addFavorite(story_id)}>Fav!</button>
               </div>
             )
         })
     }
+
+
 
     render() {
         const { news } = this.state
@@ -58,11 +73,7 @@ class Home extends Component {
             <Container>
                 <DropDownMenu />
             </Container>
-            <div>
-                <h1>{value}</h1>
-                <button onClick={incrementAction}>increment</button>
-                <button onClick={decreaseAction}>decrease</button>
-            </div>
+            <div style={{ height: 20 }}></div>
             <div style={{ backgroundColor: 'blue', width: '90vw', columns: '2 auto' }}>
                {news && this.newsList()}
             </div>
