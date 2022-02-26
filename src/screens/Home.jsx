@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Container } from "semantic-ui-react"
 import DropDownMenu from "../components/DropDownMenu";
 import { newsService } from "../services/news.service"
 import { connect } from 'react-redux';
@@ -42,6 +43,9 @@ class Home extends Component {
             <div>
                 {news && this.newsList()}
             </div>
+            <Container>
+                <DropDownMenu />
+            </Container>
             <div>
                 <h1>{value}</h1>
                 <button onClick={incrementAction}>increment</button>

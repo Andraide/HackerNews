@@ -1,64 +1,54 @@
-import React, { Component } from 'react';
+import React from 'react'
+import { Dropdown } from 'semantic-ui-react'
 
-class DropDownMenu extends Component {
-  constructor() {
-    super();
-    
-    this.state = {
-      showMenu: false,
-    };
-    
-    this.showMenu = this.showMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
-  }
+
+const friendOptions = [
+    {
+      key: 'Jenny Hess',
+      text: 'Jenny Hess',
+      value: 'Jenny Hess',
+      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg' },
+    },
+    {
+      key: 'Elliot Fu',
+      text: 'Elliot Fu',
+      value: 'Elliot Fu',
+      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg' },
+    },
+    {
+      key: 'Stevie Feliciano',
+      text: 'Stevie Feliciano',
+      value: 'Stevie Feliciano',
+      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/stevie.jpg' },
+    },
+    {
+      key: 'Christian',
+      text: 'Christian',
+      value: 'Christian',
+      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/christian.jpg' },
+    },
+    {
+      key: 'Matt',
+      text: 'Matt',
+      value: 'Matt',
+      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/matt.jpg' },
+    },
+    {
+      key: 'Justen Kitsune',
+      text: 'Justen Kitsune',
+      value: 'Justen Kitsune',
+      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/justen.jpg' },
+    },
+  ]
   
-  showMenu(event) {
-    event.preventDefault();
-    
-    this.setState({ showMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
-    });
-  }
+  const DropdownMenu = () => (
+    <Dropdown
+      placeholder='Select Friend'
+      fluid
+      selection
+      options={friendOptions}
+    />
+  )
   
-  closeMenu(event) {
-    
-    if (!this.dropdownMenu.contains(event.target)) {
-      
-      this.setState({ showMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
-      });  
-      
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <button onClick={this.showMenu}>
-          Show menu
-        </button>
-        
-        {
-          this.state.showMenu
-            ? (
-              <div
-                className="menu"
-                ref={(element) => {
-                  this.dropdownMenu = element;
-                }}
-              >
-                <button> Menu item 1 </button>
-                <button> Menu item 2 </button>
-                <button> Menu item 3 </button>
-              </div>
-            )
-            : (
-              null
-            )
-        }
-      </div>
-    );
-  }
-}
-
-export default DropDownMenu
+  export default DropdownMenu
+  
