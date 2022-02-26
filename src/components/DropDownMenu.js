@@ -1,54 +1,64 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react'
+import angular from '../assets/icons/angular/image.jpg'
+import react from '../assets/icons/react/image.jpg'
+import vue from '../assets/icons/vue/image.jpg'
 
 
 const friendOptions = [
     {
-      key: 'Jenny Hess',
-      text: 'Jenny Hess',
-      value: 'Jenny Hess',
-      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg' },
+      key: 'Angular',
+      text: 'Angular',
+      value: 'Angular',
+      image: { avatar: false, src: angular },
     },
     {
-      key: 'Elliot Fu',
-      text: 'Elliot Fu',
-      value: 'Elliot Fu',
-      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg' },
+      key: 'React',
+      text: 'React',
+      value: 'React',
+      image: { avatar: true, src: react },
     },
     {
-      key: 'Stevie Feliciano',
-      text: 'Stevie Feliciano',
-      value: 'Stevie Feliciano',
-      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/stevie.jpg' },
-    },
-    {
-      key: 'Christian',
-      text: 'Christian',
-      value: 'Christian',
-      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/christian.jpg' },
-    },
-    {
-      key: 'Matt',
-      text: 'Matt',
-      value: 'Matt',
-      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/matt.jpg' },
-    },
-    {
-      key: 'Justen Kitsune',
-      text: 'Justen Kitsune',
-      value: 'Justen Kitsune',
-      image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/justen.jpg' },
-    },
+      key: 'Vue',
+      text: 'Vue',
+      value: 'Vue',
+      image: { avatar: true, src: vue },
+    }
   ]
   
-  const DropdownMenu = () => (
-    <Dropdown
-      placeholder='Select Friend'
-      fluid
-      selection
-      options={friendOptions}
-    />
-  )
-  
+  class DropdownMenu extends Component {
+
+    constructor(props)
+    {
+      super(props)
+      this.state = {
+        library: 'Angular'
+      }
+
+      this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange = (event, { value }) =>
+    {
+      console.log(value)
+    }
+
+    render()
+    {
+      return (
+        <Dropdown
+          placeholder='Select Friend'
+          fluid
+          selection
+          options={friendOptions}
+          onChange={this.handleChange}
+          value={this.state.library}
+        />
+      )
+
+    }
+
+  }
+
   export default DropdownMenu
   

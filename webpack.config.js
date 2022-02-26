@@ -17,8 +17,16 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                  {
+                    loader: 'file-loader',
+                  },
+                ],
             }
-        ]
+        ],
     },
     resolve: {
         extensions: ['.js', '.jsx'],
@@ -44,9 +52,9 @@ module.exports = {
     },
     entry: './src/index.jsx',
     output: {
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: "/dist/",
-    filename: 'bundle.js'
+        ath: path.resolve(__dirname, 'dist'),
+        publicPath: "/dist/",
+        filename: 'bundle.js'
   }
 }
 
