@@ -3,6 +3,11 @@ import { Dropdown } from 'semantic-ui-react'
 import angular from '../assets/icons/angular/image.jpg'
 import react from '../assets/icons/react/image.jpg'
 import vue from '../assets/icons/vue/image.jpg'
+import { connect } from 'react-redux';
+import store from '../redux/store/store';
+import { change } from '../redux/actions/actions';
+//import { change } from '../redux/actions/actions';
+
 
 
 const friendOptions = [
@@ -32,7 +37,7 @@ const friendOptions = [
     {
       super(props)
       this.state = {
-        library: 'Angular'
+        
       }
 
       this.handleChange = this.handleChange.bind(this)
@@ -40,25 +45,40 @@ const friendOptions = [
 
     handleChange = (event, { value }) =>
     {
-      console.log(value)
+      //this.setState({ library: value })
+      store.dispatch({ type: 'CHANGE', payload: value })
+      //change(value)
+      
     }
 
     render()
     {
+      //console.log("Value", this.props.value)
       return (
+        <div>
+          <p>
+            {this.props.library}
+          </p>
         <Dropdown
           placeholder='Select Friend'
           fluid
           selection
           options={friendOptions}
           onChange={this.handleChange}
-          value={this.state.library}
+          value={this.props.library}
         />
+        </div>
       )
 
     }
 
   }
 
-  export default DropdownMenu
+  const mapStateToProps = (state) => ({
+    library: state.librarys.library,
+    value: state.counter.value
+  });
+
+
+  export default connect(mapStateToProps)(DropdownMenu)
   

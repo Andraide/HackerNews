@@ -23,9 +23,16 @@ class Home extends Component {
         newsService.getNewsByFilter('angular').then((news) => this.setState({ news }))
     }
 
+    componentDidUpdate()
+    {
+      console.log("Library update", this.props.library)
+    }
+
     newsList()
     {
         const { news } = this.state
+        const { library } = this.props
+
         news.map((x, i) => {
             const { author, story_titile, story_url, created_at } = x
         })
@@ -33,7 +40,8 @@ class Home extends Component {
 
     render() {
         const { news } = this.state
-        const { value, incrementAction, decreaseAction } = this.props;
+        const { value, incrementAction, decreaseAction, library } = this.props;
+        console.log("Library", library)
         return (
         <div>
             <div>
@@ -58,7 +66,8 @@ class Home extends Component {
 
 
 const mapStateToProps = (state) => ({
-  value: state.value,
+  library: state.librarys.library,
+  value: state.counter.value,
 });
 
 const mapDispatchToProps = (dispatch) => ({

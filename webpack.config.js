@@ -52,7 +52,7 @@ module.exports = {
     },
     entry: './src/index.jsx',
     output: {
-        ath: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist'),
         publicPath: "/dist/",
         filename: 'bundle.js'
   }
