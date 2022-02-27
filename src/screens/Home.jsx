@@ -168,33 +168,26 @@ class Home extends Component {
         
         
 
-        console.log("LEN", this.state.faves.length)
-        console.log("FAVES", this.props.toogle)
-        console.log("Boolean", (this.state.faves.length < 2 && this.props.toogle == 'Faves'))
 
         const { news, nbPages, faves } = this.state
         const { value, incrementAction, decreaseAction, library } = this.props;
-        console.log("Library", library)
-        console.log("Toogle", this.props.toogle)
 
        
-        
-
-        
-      
-
-
         return (
         <div align='center' style={{ alignItems: 'center' }}>
-            <div>
-              <h1>Hacker news
+            <div align='left' style={{ justifyContent: 'left', alignItems: 'left', margin: '20px 0px 0px 80px' }}>
+              <h1>HACKER NEWS
               </h1>
             </div>
-            <Container>
-                <DropDownMenu />
-            </Container>
+            <div style={{ backgroundColor: 'transparent', width: '90vw' }}>
+              <div>
+                <Container style={{ width: '40vw', align: 'left', alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <DropDownMenu />
+                </Container>
+              </div>
+            </div>
             <div style={{ height: 20 }}></div>
-            {news && <div style={{ backgroundColor: 'transparent', width: '90vw', columns:  '2 auto', alignItems: 'center', justifyContent: 'center' }}>
+            {news && <div align='center' style={{ backgroundColor: 'transparent', width: '90vw', columns:  '2 auto', alignItems: 'center', justifyContent: 'center' }}>
                {this.newsList()}
             </div>}
             <div style={{ marginTop: '10px' }}>
