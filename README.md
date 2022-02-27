@@ -1,9 +1,9 @@
-# Esqueleton - React
+# HackerNews
 
-> A React esqueleton for fast development process.
+> A React Spa.
 
 ```
 
-npm i && npm run devserver
+npm i && npm run dev
 
 ```
