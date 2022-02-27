@@ -7,6 +7,10 @@ import { incrementAction, decreaseAction } from '../redux/actions/actions';
 import { favService } from '../services/faves.services';
 import { Pagination } from 'semantic-ui-react';
 import { Icon, Label, Menu, Table } from 'semantic-ui-react'
+import RedHeart from '../assets/icons/heart/red/image.png'
+import WhiteHeart from '../assets/icons/heart/white/image.png'
+import Watch from '../assets/icons/watch/image.png'
+
 
 const getLogger = require('webpack-log');
 const log = getLogger({ name: 'About logs' });
@@ -19,7 +23,7 @@ class Home extends Component {
         this.state = {
             news: null,
             filterOne: 'all',
-            faves: null,
+            faves: [],
             currentPage: 0,
             nbPages: null,
         }
@@ -60,20 +64,89 @@ class Home extends Component {
       favService.setFaves(story_id)
     }
 
+    rmFavorite(story_id)
+    {
+      favService.rmFaves(story_id)
+    }
+
     newsList()
     {
-        const { news } = this.state
-        const { library } = this.props
-
-        return news.map((x, i) => {
-            const { author, story_titile, story_url, created_at, story_id } = x
-            return (
-              <div key={i} align="center" style={{ width: '40vw', backgroundColor: 'yellow', alignItems: 'center', alignContent: 'center', align: 'center' }}>
-                <p>{author}</p>
-                <button onClick={() => this.addFavorite(story_id)}>Fav!</button>
-              </div>
-            )
+        const { news, faves } = this.state
+        
+        let cnt = 0
+        let favoritesNews = news.filter((x) => {
+          const { story_id, objectID } = x
+          if(faves.indexOf(objectID) != -1)
+          {
+            return true
+          }
+          else
+          {
+            return false
+          }
         })
+
+        if(favoritesNews.length%2)
+        {
+          favoritesNews.push({ story_id: 'empty' })
+        }
+
+        if(this.props.toogle == 'FAVES')
+        {
+          return favoritesNews.map((x, i) => {
+            const { author, story_title, story_url, created_at, story_id, objectID } = x
+
+            if(faves.indexOf(objectID) != -1)
+            {
+              return (
+                <div key={i} align="center" style={{ display: 'flex' ,flex: 1, flexDirection: 'row' ,width: '40vw', height: '13vh', backgroundColor: 'transparent', alignItems: 'center', alignContent: 'center', align: 'center', borderStyle: 'solid', borderWidth: '1px', marginBottom: '10px', borderRadius: '10px' }}>
+                  <div style={{height: '70%' ,display: 'flex', flex: 0.8, flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', flex: 0.3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
+                      <div style={{ flex: 0.1, justifyContent: 'center', alignItems: 'center' }}><img src={Watch}></img></div>
+                      <div style={{ display: 'flex', flex:0.9, alignItems: 'center', justifyContent: 'flex-start' }}>{created_at}</div>
+                    </div>
+                    <div style={{ height: '100%', display: 'flex', flex: 0.7, justifyContent: 'flex-start', alignItems: 'center', marginLeft: '10px', backgroundColor: 'transparent' }}>
+                      <p style={{ textAlign: 'left' }}>{story_title}</p>   
+                    </div>
+                  </div>
+                  <div style={{ flex: 0.2 }}>
+                    <button onClick={() => faves.indexOf(objectID) != -1 ? this.rmFavorite(objectID) : this.addFavorite(objectID)}><img src={faves.indexOf(objectID) != -1 ? RedHeart : WhiteHeart}/></button>
+                  </div>
+                </div>
+              )
+            }else if(story_id == 'empty')
+            {
+              return (
+                <div key={i} align="center" style={{color: 'transparent', display: 'flex' ,flex: 1, flexDirection: 'row' ,width: '40vw', height: '13vh', backgroundColor: 'transparent', alignItems: 'center', alignContent: 'center', align: 'center', borderStyle: 'solid', borderWidth: '1px', marginBottom: '10px', borderRadius: '10px' }}>
+                <p>Empty</p>
+                </div>
+              )
+            }
+          })
+        }
+        else
+        {
+          return news.map((x, i) => {
+            const { author, story_title, story_url, created_at, story_id, objectID } = x
+            console.log("X", x)
+            return (
+              <div key={i} align="center" style={{ display: 'flex' ,flex: 1, flexDirection: 'row' ,width: '40vw', height: '13vh', backgroundColor: 'transparent', alignItems: 'center', alignContent: 'center', align: 'center', borderStyle: 'solid', borderWidth: '1px', marginBottom: '10px', borderRadius: '10px' }}>
+                <div style={{height: '70%' ,display: 'flex', flex: 0.8, flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', flex: 0.3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
+                    <div style={{ flex: 0.1, justifyContent: 'center', alignItems: 'center' }}><img src={Watch}></img></div>
+                    <div style={{ display: 'flex', flex:0.9, alignItems: 'center', justifyContent: 'flex-start' }}>{created_at}</div>
+                  </div>
+                  <div style={{ height: '100%', display: 'flex', flex: 0.7, justifyContent: 'flex-start', alignItems: 'center', marginLeft: '10px', backgroundColor: 'transparent' }}>
+                    <p style={{ textAlign: 'left' }}>{story_title}</p>   
+                  </div>
+                </div>
+                <div style={{ flex: 0.2 }}>
+                  <button onClick={() => faves.indexOf(objectID) != -1 ? this.rmFavorite(objectID) : this.addFavorite(objectID)}><img src={faves.indexOf(objectID) != -1 ? RedHeart : WhiteHeart}/></button>
+                </div>
+              </div>
+              )
+          })
+        }
     }
 
     pagination()
@@ -92,12 +165,25 @@ class Home extends Component {
 
 
     render() {
+        
+        
 
+        console.log("LEN", this.state.faves.length)
+        console.log("FAVES", this.props.toogle)
+        console.log("Boolean", (this.state.faves.length < 2 && this.props.toogle == 'Faves'))
 
-        const { news, nbPages } = this.state
+        const { news, nbPages, faves } = this.state
         const { value, incrementAction, decreaseAction, library } = this.props;
         console.log("Library", library)
         console.log("Toogle", this.props.toogle)
+
+       
+        
+
+        
+      
+
+
         return (
         <div align='center' style={{ alignItems: 'center' }}>
             <div>
@@ -108,10 +194,10 @@ class Home extends Component {
                 <DropDownMenu />
             </Container>
             <div style={{ height: 20 }}></div>
-            <div style={{ backgroundColor: 'blue', width: '90vw', columns: '2 auto' }}>
-               {news && this.newsList()}
-            </div>
-            <div>
+            {news && <div style={{ backgroundColor: 'transparent', width: '90vw', columns:  '2 auto', alignItems: 'center', justifyContent: 'center' }}>
+               {this.newsList()}
+            </div>}
+            <div style={{ marginTop: '10px' }}>
               {nbPages && this.pagination()}
             </div>
         </div>

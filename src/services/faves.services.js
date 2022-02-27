@@ -5,6 +5,7 @@ const favesSubject = new BehaviorSubject([]);
 export const favService = {
     setFaves,
     getFaves,
+    rmFaves,
     favesSubject: favesSubject.asObservable(),
     get faves () { return favesSubject.value }
 }
@@ -42,4 +43,24 @@ function getFaves()
     {
         favesSubject.next([])
     }
+}
+
+function rmFaves(storyId)
+{
+    return new Promise((resolve, reject) => {
+        try
+        {
+            let faves = localStorage.getItem('Faves') ? JSON.parse(localStorage.getItem('Faves')) : []
+            console.log("Faves", faves)
+            faves = faves.filter((fave) => fave != storyId)
+            localStorage.setItem('Faves', JSON.stringify(faves))
+            favesSubject.next(faves)
+            //localStorage.removeItem("Faves")
+            resolve()
+        }
+        catch(err)
+        {
+            reject(err)
+        }
+    })   
 }
