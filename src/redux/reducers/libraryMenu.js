@@ -1,5 +1,5 @@
 const initialState = {
-    library: 'Angular',
+    library: 'angular',
   };
 
   function libraryMenuReducer(state = initialState, action)

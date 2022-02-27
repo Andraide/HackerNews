@@ -14,19 +14,19 @@ const friendOptions = [
     {
       key: 'Angular',
       text: 'Angular',
-      value: 'Angular',
+      value: 'angular',
       image: { avatar: false, src: angular },
     },
     {
       key: 'React',
       text: 'React',
-      value: 'React',
+      value: 'react',
       image: { avatar: true, src: react },
     },
     {
       key: 'Vue',
       text: 'Vue',
-      value: 'Vue',
+      value: 'vue',
       image: { avatar: true, src: vue },
     }
   ]
@@ -42,6 +42,7 @@ const friendOptions = [
 
       this.handleChange = this.handleChange.bind(this)
     }
+
 
     handleChange = (event, { value }) =>
     {
@@ -72,7 +73,7 @@ const friendOptions = [
           </div>
           <div style={{ height: '4vh' }}></div>
           <Dropdown
-            placeholder='Select Friend'
+            placeholder='Select a library or framework'
             fluid
             selection
             options={friendOptions}

@@ -27,9 +27,9 @@ async function getNews() {
             })
 }
 
-async function getNewsByFilter(query) {
+async function getNewsByFilter(query, page) {
     log.info("SEARCHING", query)
-    const url = 'https://hn.algolia.com/api/v1/search_by_date?query='+query+'&page=0'
+    const url = 'https://hn.algolia.com/api/v1/search_by_date?query='+query+'&page='+page
 
 
     const requestOptions = {

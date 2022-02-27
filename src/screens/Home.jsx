@@ -20,8 +20,8 @@ class Home extends Component {
             news: null,
             filterOne: 'all',
             faves: null,
-            currentPage: 1,
-            nbPages: null
+            currentPage: 0,
+            nbPages: null,
         }
 
         this.paginationClick = this.paginationClick.bind(this)
@@ -30,15 +30,28 @@ class Home extends Component {
     componentDidMount()
     {
         favService.getFaves()
-        newsService.getNewsByFilter('angular').then(({hits, nbPages}) => this.setState({ news: hits, nbPages }))
+        
+        newsService.getNewsByFilter('angular', this.state.currentPage).then(({hits, nbPages}) => this.setState({ news: hits, nbPages }))
 
         this.favorites = favService.favesSubject.subscribe(faves => { this.setState({ faves: faves }) })
     }
 
-    componentDidUpdate()
+    componentDidUpdate(prevProps, prevState)
     {
       console.log("Library update", this.props.library)
+      console.log("Library prevState", prevState.library)
       console.log("Faves updata", this.state.faves)
+
+      if(this.props.library != prevProps.library)
+      {
+        console.log("Launching", this.props.library, prevProps.library)
+        newsService.getNewsByFilter(this.props.library, this.state.currentPage).then(({hits, nbPages}) => this.setState({ news: hits, nbPages }))
+      }
+
+      if(this.state.currentPage != prevState.currentPage)
+      {
+        newsService.getNewsByFilter(this.props.library, this.state.currentPage).then(({hits, nbPages}) => this.setState({ news: hits, nbPages }))
+      }
     }
 
     addFavorite(story_id)
@@ -73,7 +86,7 @@ class Home extends Component {
 
     paginationClick(event, data)
     {
-      this.setState({ currentPage: data.activePage })
+      this.setState({ currentPage: data.activePage - 1 })
     }
 
 
@@ -87,6 +100,10 @@ class Home extends Component {
         console.log("Toogle", this.props.toogle)
         return (
         <div align='center' style={{ alignItems: 'center' }}>
+            <div>
+              <h1>Hacker news
+              </h1>
+            </div>
             <Container>
                 <DropDownMenu />
             </Container>
